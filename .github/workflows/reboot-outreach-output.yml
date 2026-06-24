@@ -1,0 +1,75 @@
+name: Reboot Outreach Output
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - output.md
+      - output-rules.md
+      - .agent/attachments/requested-files.txt
+      - data/test-output/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  output:
+    name: Send output package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          set -euo pipefail
+          test -f output.md
+          test -f output-rules.md
+          test -f .agent/attachments/requested-files.txt
+          test -s output.md
+
+      - name: Prepare package
+        run: |
+          set -euo pipefail
+          head -c 6500 output.md > prepared-output.md
+          rm -f requested-files.zip files-to-zip.txt
+          while IFS= read -r path || [ -n "$path" ]; do
+            case "$path" in ""|\#*) continue ;; esac
+            test -f "$path"
+            printf '%s\n' "$path" >> files-to-zip.txt
+          done < .agent/attachments/requested-files.txt
+          if [ -s files-to-zip.txt ]; then
+            zip -q requested-files.zip -@ < files-to-zip.txt
+          fi
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: reboot-outreach-output
+          path: |
+            prepared-output.md
+            requested-files.zip
+          if-no-files-found: warn
+
+      - name: Send status package
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DISCORD_WEBHOOK_URL:-}" ]; then
+            echo "DISCORD_WEBHOOK_URL is not set. Skipping."
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          text = Path('prepared-output.md').read_text(encoding='utf-8', errors='replace').strip()
+          payload = {'content': text[:1900], 'allowed_mentions': {'parse': []}}
+          Path('payload.json').write_text(json.dumps(payload), encoding='utf-8')
+          PY
+          if [ -f requested-files.zip ]; then
+            curl -sS -f -F "payload_json=<payload.json" -F "files[0]=@requested-files.zip" "$DISCORD_WEBHOOK_URL"
+          else
+            curl -sS -f -H "Content-Type: application/json" --data @payload.json "$DISCORD_WEBHOOK_URL"
+          fi
