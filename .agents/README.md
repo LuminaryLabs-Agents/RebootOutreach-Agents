@@ -10,7 +10,8 @@ The goal is to make each future agent run self-directed, bounded, and easy to re
 .agents/
   README.md
   prompts/
-    001-research-goals.md
+    000-research-goals.md
+    001-seed-information-collector.md
 ```
 
 ## Prompt rules
@@ -20,10 +21,17 @@ The goal is to make each future agent run self-directed, bounded, and easy to re
 - Prompts should prefer evidence, citations, and source URLs over assumptions.
 - Prompts should never authorize sending outreach directly without validation and human approval.
 
-## Current first prompt
+## Current prompt sequence
 
 ```text
-.agents/prompts/001-research-goals.md
+000-research-goals.md = mission charter and validation foundation
+001-seed-information-collector.md = first operational prompt for precision-search seeds
 ```
 
-This prompt defines the research goals for Reboot Imagine lead sourcing, validation, prioritization, and cold-email readiness.
+## Intended next prompts
+
+```text
+002-precision-lead-search.md
+003-lead-validation-gates.md
+004-prioritized-outreach-queue.md
+```
