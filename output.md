@@ -1,7 +1,10 @@
-Reboot Outreach output package update
+Reboot Outreach package workflow ready
 
 Changes:
-- Added a learning workflow for remembered operating rules.
-- Added a requested-files manifest for packaged review outputs.
-- Added a 10-company XR CSV test file.
-- Updating the workflow so requested files are zipped with the status output.
+- Reduced noisy status posting.
+- Added requested-files zip packaging.
+- Added learning workflow and changelog entry.
+- Added XR companies CSV test output.
+
+Attachment:
+- requested-files.zip contains data/test-output/xr-companies.csv
