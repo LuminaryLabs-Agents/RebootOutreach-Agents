@@ -1,0 +1,5 @@
+contact_id,lead_id,organization_name,contact_name,contact_title,email,email_validation_status,email_validation_method,reason_manual_review_needed,source_url,review_notes
+RC-0003,OL-0001,Strivr,Derek Belch,CEO,,not_collected,not_validated,"Need official current-role source and public email source or approved contact route",https://www.axios.com/2021/09/29/virtual-reality-training-walmart-nfl,"Do not guess email"
+RC-0001,OL-0002,Osso VR,Justin Barad,CEO,,not_collected,not_validated,"Need official current-role source and public email source or approved contact route",https://www.axios.com/2022/03/24/osso-vr-nets-66m-series-c,"Do not guess email; healthcare context review required"
+RC-0004,OL-0003,Virti,Dr Alexander Young,Founder,,not_collected,not_validated,"Need official current-role source and public email source or approved contact route",https://en.wikipedia.org/wiki/Virti,"Public profile only"
+RC-0005,OL-0003,Virti,Kurt Kratchman,CEO,,not_collected,not_validated,"Need official current-role source and public email source or approved contact route",https://en.wikipedia.org/wiki/Virti,"Public profile only"
