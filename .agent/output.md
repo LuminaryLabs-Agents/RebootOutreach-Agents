@@ -4,50 +4,46 @@
 
 Date: 2026-06-24
 
-Goal: Add requested-file zip packages to the Reboot Outreach output loop.
+Goal: Reduce duplicate output posts and keep requested-file zip support.
 
 ## Summary
 
-The output workflow now supports packaging requested review files into `requested-files.zip`.
+The previous output workflow posted on every push, which caused repeated status messages during multi-file repo updates.
 
-The package is controlled by:
+The current workflow has been replaced with a path-filtered version.
+
+It now runs only when these status/package paths change:
 
 ```text
+output.md
+output-rules.md
 .agent/attachments/requested-files.txt
+data/test-output/**
 ```
 
-The first test file is:
-
-```text
-data/test-output/xr-companies.csv
-```
+This keeps ordinary docs, memory, pointer, and workflow edits from creating repeated status posts.
 
 ## Files changed
 
-- output.md
-- output-rules.md
-- .agent/workflow.md
-- .agent/output.md
-- .agent/changelog.md
-- .agent/workflows/learning-workflow.md
-- .agent/attachments/requested-files.txt
-- data/test-output/xr-companies.csv
-- .github/workflows/reboot-outreach-output.yml
-- docs/REBOOT_OUTREACH_MEMORY.md
+- `.github/workflows/reboot-outreach-output.yml`
+- `.agent/output.md`
+- `.agent/changelog.md`
+- `docs/REBOOT_OUTREACH_MEMORY.md`
+- `output.md`
 
 ## Decisions made
 
-- Requested review files are manifest-driven.
-- The workflow zips only existing repo-relative paths from the manifest.
-- Missing requested files fail the prepare job.
-- Root `output.md` should now use a headline and change list, not stale repeated text.
-- This is recorded as a learning change because future agent runs must preserve the file package rule.
+- Internal repo updates should not notify by default.
+- Status posts should happen only when the short status text or requested package inputs change.
+- Root `output.md` must use a headline and change list so messages are not stale or repetitive.
+- The requested-files zip rule stays active.
 
 ## Current status
 
 ```text
 output_contract: active
 file_package_contract: active
+anti_spam_trigger_filter: active
 workflow: .github/workflows/reboot-outreach-output.yml
 attachment_manifest: .agent/attachments/requested-files.txt
 test_attachment: data/test-output/xr-companies.csv
@@ -56,4 +52,4 @@ next prompt: .agent/prompts/002-nexus-crawler-mvp.md
 
 ## Next action
 
-Confirm the output workflow run posts the short status text and attaches `requested-files.zip` when `DISCORD_WEBHOOK_URL` is configured.
+Use one final root `output.md` update to post the concise status and attach the requested files zip.
