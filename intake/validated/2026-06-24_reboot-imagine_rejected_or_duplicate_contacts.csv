@@ -1,0 +1,2 @@
+contact_id,canonical_contact_id,organization_name,contact_name,rejection_or_hold_status,reason,source_url,notes
+RC-0002,RC-0003,Strivr,Derek Belch,rejected_duplicate,"Duplicate of RC-0003; same organization and contact. RC-0003 retained because source evidence better supports large-scale VR training deployment relevance.",https://en.wikipedia.org/wiki/Derek_Belch,"Merge useful title context into RC-0003 during deeper validation"
