@@ -1,0 +1,11 @@
+[
+  {"contact_id":"RC-0003","lead_id":"OL-0001","organization_name":"Strivr","contact_name":"Derek Belch","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"official_source_and_email_validation_needed"},
+  {"contact_id":"RC-0001","lead_id":"OL-0002","organization_name":"Osso VR","contact_name":"Justin Barad","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"official_source_and_email_validation_needed"},
+  {"contact_id":"RC-0004","lead_id":"OL-0003","organization_name":"Virti","contact_name":"Dr Alexander Young","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"official_source_and_email_validation_needed"},
+  {"contact_id":"RC-0005","lead_id":"OL-0003","organization_name":"Virti","contact_name":"Kurt Kratchman","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"official_source_and_email_validation_needed"},
+  {"contact_id":"RC-0006","lead_id":"OL-0004","organization_name":"VirtaMed","contact_name":"Stefan Tuchschmid","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"hold_for_region_and_current_role_review"},
+  {"contact_id":"RC-0007","lead_id":"OL-0004","organization_name":"VirtaMed","contact_name":"Daniel Bachofen","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"hold_for_region_and_current_role_review"},
+  {"contact_id":"RC-0008","lead_id":"OL-0005","organization_name":"MSR - Israel Center for Medical Simulation","contact_name":"Amitai Ziv","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"hold_unless_international_outreach_approved"},
+  {"contact_id":"RC-0009","lead_id":"OL-0006","organization_name":"Virtual Reality and Education Laboratory","contact_name":"Veronica S. Pantelidis","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"hold_for_current_association_review"},
+  {"contact_id":"RC-0010","lead_id":"OL-0006","organization_name":"Virtual Reality and Education Laboratory","contact_name":"David C. Vinciguerra","email_validation_status":"not_collected","human_review_required":true,"recommended_next_action":"hold_for_current_association_review"}
+]
