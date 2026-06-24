@@ -12,6 +12,7 @@ The goal is to make each future agent run self-directed, bounded, and easy to re
   prompts/
     000-research-goals.md
     001-seed-information-collector.md
+    002-precision-lead-search.md
 ```
 
 ## Prompt rules
@@ -26,12 +27,12 @@ The goal is to make each future agent run self-directed, bounded, and easy to re
 ```text
 000-research-goals.md = mission charter and validation foundation
 001-seed-information-collector.md = first operational prompt for precision-search seeds
+002-precision-lead-search.md = raw organization lead collection from seed files
 ```
 
 ## Intended next prompts
 
 ```text
-002-precision-lead-search.md
 003-lead-validation-gates.md
 004-prioritized-outreach-queue.md
 ```
