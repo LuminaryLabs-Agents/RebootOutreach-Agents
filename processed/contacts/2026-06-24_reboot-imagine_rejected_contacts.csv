@@ -1,0 +1,2 @@
+contact_id,lead_id,organization_name,contact_name,contact_title,source_url,rejection_reason,rejection_notes
+RC-0002,OL-0001,Strivr,Derek Belch,Founder and CEO,https://en.wikipedia.org/wiki/Derek_Belch,duplicate_contact,"Duplicate of RC-0003; RC-0003 retained as canonical because source better supports deployment-scale relevance"
