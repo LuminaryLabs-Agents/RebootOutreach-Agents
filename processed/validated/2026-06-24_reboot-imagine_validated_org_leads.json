@@ -1,0 +1,14 @@
+[
+  {"lead_id":"OL-0001","organization_name":"Strivr","validation_status":"validated_priority_A","final_org_score":100,"recommended_next_action":"advance_to_contact_research"},
+  {"lead_id":"OL-0002","organization_name":"Osso VR","validation_status":"validated_priority_A","final_org_score":98,"recommended_next_action":"advance_to_contact_research"},
+  {"lead_id":"OL-0003","organization_name":"Virti","validation_status":"validated_priority_B","final_org_score":75,"recommended_next_action":"advance_to_contact_research_with_source_check"},
+  {"lead_id":"OL-0004","organization_name":"VirtaMed","validation_status":"validated_priority_C","final_org_score":70,"recommended_next_action":"hold_region_and_current_source_review"},
+  {"lead_id":"OL-0005","organization_name":"MSR - Israel Center for Medical Simulation","validation_status":"hold_needs_more_research","final_org_score":60,"recommended_next_action":"hold_unless_international_outreach_approved"},
+  {"lead_id":"OL-0006","organization_name":"Virtual Reality and Education Laboratory","validation_status":"hold_needs_more_research","final_org_score":58,"recommended_next_action":"hold_for_current_activity_review"},
+  {"lead_id":"OL-0007","organization_name":"King's College London","validation_status":"validated_priority_C","final_org_score":57,"recommended_next_action":"hold_for_specific_program_research"},
+  {"lead_id":"OL-0008","organization_name":"Icahn School of Medicine at Mount Sinai","validation_status":"validated_priority_B","final_org_score":72,"recommended_next_action":"hold_for_internal_relationship_and_suppression_check"},
+  {"lead_id":"OL-0009","organization_name":"Prisms","validation_status":"validated_priority_B","final_org_score":75,"recommended_next_action":"advance_to_contact_research_with_source_check"},
+  {"lead_id":"OL-0010","organization_name":"Acadicus","validation_status":"validated_priority_B","final_org_score":74,"recommended_next_action":"advance_to_contact_research_with_source_check"},
+  {"lead_id":"OL-0011","organization_name":"The Glimpse Group","validation_status":"validated_priority_B","final_org_score":69,"recommended_next_action":"hold_for_fit_specificity"},
+  {"lead_id":"OL-0012","organization_name":"Motive.io","validation_status":"validated_priority_B","final_org_score":75,"recommended_next_action":"advance_to_contact_research_with_source_check"}
+]
