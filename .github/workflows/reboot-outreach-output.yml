@@ -24,6 +24,9 @@ jobs:
           test -f .agent/pointer.md
           test -f .agent/workflow.md
           test -f .agent/output.md
+          test -f .agent/changelog.md
+          test -f .agent/workflows/learning-workflow.md
+          test -f .agent/attachments/requested-files.txt
           test -f docs/REBOOT_OUTREACH_MEMORY.md
           test -f docs/NEXUS_CRAWLER_IMPLEMENTATION_PLAN.md
           test -f docs/NEXUS_CRAWLER_ACCEPTANCE.md
@@ -31,11 +34,12 @@ jobs:
           test -s output.md
 
   prepare-summary:
-    name: Prepare summary
+    name: Prepare summary and zip
     needs: validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Prepare output
         run: |
           set -euo pipefail
@@ -44,10 +48,38 @@ jobs:
           else
             head -c 6500 .agent/output.md > prepared-output.md
           fi
+
+      - name: Package requested files
+        run: |
+          set -euo pipefail
+          rm -f requested-files.zip files-to-zip.txt
+          manifest=".agent/attachments/requested-files.txt"
+
+          while IFS= read -r raw_path || [ -n "$raw_path" ]; do
+            path="$(printf '%s' "$raw_path" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+            case "$path" in
+              ""|\#*) continue ;;
+            esac
+            if [ ! -f "$path" ]; then
+              echo "Missing requested file: $path"
+              exit 1
+            fi
+            printf '%s\n' "$path" >> files-to-zip.txt
+          done < "$manifest"
+
+          if [ -s files-to-zip.txt ]; then
+            zip -q requested-files.zip -@ < files-to-zip.txt
+            unzip -l requested-files.zip
+          else
+            echo "No requested files listed."
+          fi
+
       - uses: actions/upload-artifact@v4
         with:
           name: reboot-outreach-output
-          path: prepared-output.md
+          path: |
+            prepared-output.md
+            requested-files.zip
           if-no-files-found: error
 
   notify:
@@ -62,7 +94,8 @@ jobs:
         with:
           name: reboot-outreach-output
         continue-on-error: true
-      - name: Send status text
+
+      - name: Send status and zip
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
@@ -80,6 +113,17 @@ jobs:
           text = Path('prepared-output.md').read_text(encoding='utf-8', errors='replace').strip()
           if not text:
               text = 'Reboot Outreach updated.'
-          Path('payload.json').write_text(json.dumps({'content': text[:1900], 'allowed_mentions': {'parse': []}}), encoding='utf-8')
+          payload = {'content': text[:1900], 'allowed_mentions': {'parse': []}}
+          Path('payload.json').write_text(json.dumps(payload), encoding='utf-8')
           PY
-          curl --fail-with-body -H "Content-Type: application/json" --data @payload.json "$DISCORD_WEBHOOK_URL"
+          if [ -f requested-files.zip ]; then
+            curl --fail-with-body \
+              -F "payload_json=<payload.json" \
+              -F "files[0]=@requested-files.zip;type=application/zip" \
+              "$DISCORD_WEBHOOK_URL"
+          else
+            curl --fail-with-body \
+              -H "Content-Type: application/json" \
+              --data @payload.json \
+              "$DISCORD_WEBHOOK_URL"
+          fi
