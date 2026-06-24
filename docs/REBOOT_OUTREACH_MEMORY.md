@@ -105,6 +105,10 @@ It is the ingestion and signal-detection layer.
 - Add LLM classification later only after rule-based signals are stable.
 - Make source domains disableable.
 - Log crawl failures.
+- Root `output.md` is the short status text source.
+- `output-rules.md` controls the short status style.
+- `.agent/output.md` is the internal run log.
+- `.github/workflows/reboot-outreach-output.yml` follows the Lost Pages-style three-step loop: validate, prepare-summary, notify.
 
 ## Safety posture
 
@@ -120,7 +124,7 @@ The crawler must:
 
 ## Implementation status
 
-Current milestone: Repo bootstrap.
+Current milestone: Ready for Nexus Crawler MVP implementation.
 
 Completed:
 
@@ -134,7 +138,10 @@ Completed:
 - Nexus Crawler MVP implementation plan added.
 - Acceptance checklist added.
 - Medical seed URL list added.
-- Discord summary workflow added.
+- Root `output.md` added.
+- Root `output-rules.md` added.
+- Lost Pages-style output workflow added.
+- Old generated summary workflow removed.
 
 In progress:
 
@@ -143,7 +150,7 @@ In progress:
 Blocked:
 
 - No target application repo has been selected yet for actual crawler code.
-- Discord webhook requires GitHub secret `DISCORD_WEBHOOK_URL`.
+- The status workflow requires GitHub secret `DISCORD_WEBHOOK_URL`.
 
 Next:
 
@@ -185,8 +192,49 @@ Result:
 Known issues:
 
 - No application code exists in this repo yet.
-- The Discord workflow will only send if `DISCORD_WEBHOOK_URL` is configured as a GitHub Actions secret.
 
 Next action:
 
 - Add actual Nexus Crawler implementation or point Codex at the target crawler app repo.
+
+### 2026-06-24 - Lost Pages-style output loop
+
+Goal:
+
+Adapt the Lost Pages output pattern to Reboot Outreach.
+
+Files changed:
+
+- output.md
+- output-rules.md
+- README.md
+- .agent/workflow.md
+- .agent/output.md
+- .agent/pointer.md
+- docs/REBOOT_OUTREACH_MEMORY.md
+- .github/workflows/reboot-outreach-output.yml
+- .github/workflows/discord-summary.yml removed
+
+Decisions made:
+
+- Reboot Outreach does not use a GitHub Pages deploy step yet.
+- The adapted three-step loop is validate, prepare-summary, notify.
+- Root `output.md` is the short status source.
+- Generated memory dumps are no longer used as the status text.
+
+Validation:
+
+- Required file checks are now encoded in the workflow validate job.
+- Workflow creation and file updates completed through the GitHub contents API.
+
+Result:
+
+- Reboot Outreach now follows the Lost Pages-style output contract.
+
+Known issues:
+
+- The workflow only posts externally when `DISCORD_WEBHOOK_URL` is present as a repository secret.
+
+Next action:
+
+- Run the Nexus Crawler MVP prompt.
