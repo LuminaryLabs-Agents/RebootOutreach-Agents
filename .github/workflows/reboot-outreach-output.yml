@@ -1,0 +1,85 @@
+name: Reboot Outreach Output
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -f output.md
+          test -f output-rules.md
+          test -f .agent/pointer.md
+          test -f .agent/workflow.md
+          test -f .agent/output.md
+          test -f docs/REBOOT_OUTREACH_MEMORY.md
+          test -f docs/NEXUS_CRAWLER_IMPLEMENTATION_PLAN.md
+          test -f docs/NEXUS_CRAWLER_ACCEPTANCE.md
+          test -f docs/MEDICAL_CRAWL_SEED_URLS.md
+          test -s output.md
+
+  prepare-summary:
+    name: Prepare summary
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare output
+        run: |
+          set -euo pipefail
+          if [ -s output.md ]; then
+            head -c 6500 output.md > prepared-output.md
+          else
+            head -c 6500 .agent/output.md > prepared-output.md
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reboot-outreach-output
+          path: prepared-output.md
+          if-no-files-found: error
+
+  notify:
+    name: Notify
+    needs:
+      - validate
+      - prepare-summary
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: reboot-outreach-output
+        continue-on-error: true
+      - name: Send status text
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DISCORD_WEBHOOK_URL:-}" ]; then
+            echo "DISCORD_WEBHOOK_URL is not set. Skipping."
+            exit 0
+          fi
+          if [ ! -f prepared-output.md ]; then
+            printf '%s\n' 'Reboot Outreach updated.' > prepared-output.md
+          fi
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          text = Path('prepared-output.md').read_text(encoding='utf-8', errors='replace').strip()
+          if not text:
+              text = 'Reboot Outreach updated.'
+          Path('payload.json').write_text(json.dumps({'content': text[:1900], 'allowed_mentions': {'parse': []}}), encoding='utf-8')
+          PY
+          curl --fail-with-body -H "Content-Type: application/json" --data @payload.json "$DISCORD_WEBHOOK_URL"
