@@ -27,9 +27,7 @@ jobs:
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-            echo "::warning::DISCORD_WEBHOOK_URL secret is not set. Skipping Discord send."
-            echo '{"content":"DISCORD_WEBHOOK_URL secret is not set."}' > discord_payload.json
-            exit 0
+            echo "::warning::DISCORD_WEBHOOK_URL secret is not set. Discord send will be skipped."
           fi
 
           python - <<'PY'
@@ -102,10 +100,14 @@ jobs:
           PY
 
       - name: Send Discord summary
-        if: ${{ env.DISCORD_WEBHOOK_URL != '' }}
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL secret is not set. Skipping Discord send."
+            exit 0
+          fi
+
           curl --fail-with-body \
             -H "Content-Type: application/json" \
             --data @discord_payload.json \
