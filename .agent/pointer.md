@@ -3,7 +3,7 @@
 ## Current target prompt
 
 ```text
-.agent/prompts/001-bootstrap-reboot-outreach.md
+.agent/prompts/002-nexus-crawler-mvp.md
 ```
 
 ## Current workflow
@@ -14,15 +14,25 @@
 
 ## Current phase
 
-Bootstrap the Reboot Outreach agent operating layer.
+Nexus Crawler MVP preparation.
 
 ## Current goal
 
-Establish the repo-local memory, crawler MVP plan, acceptance rules, medical seed URL list, and Discord reporting workflow.
+Use the established memory, acceptance checklist, seed URLs, and Lost Pages-style output loop to begin the crawler MVP implementation.
+
+## Last completed
+
+```text
+.agent/prompts/001-bootstrap-reboot-outreach.md
+```
+
+Bootstrap is complete.
+
+The repo now uses root `output.md` as the short status text source.
 
 ## Next best task
 
-After bootstrap is confirmed, move to:
+Run:
 
 ```text
 .agent/prompts/002-nexus-crawler-mvp.md
@@ -34,7 +44,8 @@ After bootstrap is confirmed, move to:
 - Read `.agent/workflow.md` second.
 - Read the selected prompt third.
 - Execute one bounded implementation batch.
-- Update `.agent/output.md` with the result.
+- Update root `output.md` with the short status text.
+- Update `.agent/output.md` with internal notes.
 - Update `docs/REBOOT_OUTREACH_MEMORY.md` with decisions, files changed, validation, and next action.
 - Update this pointer only after a useful batch is complete.
 - Do not skip validation.
