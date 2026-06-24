@@ -28,3 +28,24 @@ Validation:
 Next:
 
 Add review file paths to `.agent/attachments/requested-files.txt` before pushing.
+
+## 2026-06-24 - Reduced output noise
+
+Intent:
+
+Prevent repeated status posts during multi-file repo updates.
+
+Learning:
+
+The output workflow should only run for status/package paths, not every repo push.
+
+Trigger paths:
+
+- `output.md`
+- `output-rules.md`
+- `.agent/attachments/requested-files.txt`
+- `data/test-output/**`
+
+Next:
+
+Batch internal docs and memory changes without touching `output.md` until the final status is ready.
